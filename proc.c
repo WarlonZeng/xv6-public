@@ -276,6 +276,7 @@ scheduler(void)
   long winner;
 
   int got_total = 0; // 0 is False, 1 is True
+  int winner_found = 0;
 
   for(;;){
     // Enable interrupts on this processor.
@@ -286,6 +287,9 @@ scheduler(void)
     if (got_total == 1) {
          foundproc = 0;
          winner = random_at_most(total_tickets);
+         total_tickets = 0;
+         counter = 0;
+         winner_found = 0;
     }
 
     // Loop over process table looking for process to run.
@@ -302,8 +306,15 @@ scheduler(void)
             continue;
       }
 
-      if (counter += p->tickets < winner) {
+      counter += p->tickets;
+
+      if (counter < winner) {
             // Runnable but not winner. State doesn't change. Tickets valid for next round
+            total_tickets += p->tickets;
+            continue;
+      }
+
+      if (winner_found) {
             total_tickets += p->tickets;
             continue;
       }
@@ -324,6 +335,9 @@ scheduler(void)
       //If it's still runnable, it it should be added to total tickets
       if (p->state == RUNNABLE) {
             total_tickets += p->tickets;
+
+      winner_found = 1;
+
       }
       proc = 0;
     }
@@ -499,6 +513,9 @@ procdump(void)
       for(i=0; i<10 && pc[i] != 0; i++)
         cprintf(" %p", pc[i]);
     }
+    // cprintf(" %d", p->tickets);
+    // cprintf(" %d", winning_ticket);
+    // cprintf(" %d", total_tickets);
     cprintf("\n");
   }
 }

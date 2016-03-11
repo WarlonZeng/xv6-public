@@ -19,7 +19,7 @@ void spin(int tix) {
    6:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
     unsigned y = 0;
    d:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
-    while (x < 10000) { // Changed from 100000
+    while (x < 100000) { // Changed from 100000
   14:	eb 18                	jmp    2e <spin+0x2e>
         y = 0;
   16:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
@@ -30,7 +30,7 @@ void spin(int tix) {
     struct rtcdate end;
     unsigned x = 0;
     unsigned y = 0;
-    while (x < 10000) { // Changed from 100000
+    while (x < 100000) { // Changed from 100000
         y = 0;
         while (y < 10000) {
   22:	81 7d f0 0f 27 00 00 	cmpl   $0x270f,-0x10(%ebp)
@@ -44,8 +44,8 @@ void spin(int tix) {
     struct rtcdate end;
     unsigned x = 0;
     unsigned y = 0;
-    while (x < 10000) { // Changed from 100000
-  2e:	81 7d f4 0f 27 00 00 	cmpl   $0x270f,-0xc(%ebp)
+    while (x < 100000) { // Changed from 100000
+  2e:	81 7d f4 9f 86 01 00 	cmpl   $0x1869f,-0xc(%ebp)
   35:	76 df                	jbe    16 <spin+0x16>
             y++;
         }
@@ -111,14 +111,14 @@ int main() {
   ac:	89 45 f4             	mov    %eax,-0xc(%ebp)
   af:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
   b3:	75 1f                	jne    d4 <main+0x6b>
-        settickets(80);
+        settickets(20);
   b5:	83 ec 0c             	sub    $0xc,%esp
-  b8:	6a 50                	push   $0x50
+  b8:	6a 14                	push   $0x14
   ba:	e8 37 03 00 00       	call   3f6 <settickets>
   bf:	83 c4 10             	add    $0x10,%esp
-        spin(80);
+        spin(20);
   c2:	83 ec 0c             	sub    $0xc,%esp
-  c5:	6a 50                	push   $0x50
+  c5:	6a 14                	push   $0x14
   c7:	e8 34 ff ff ff       	call   0 <spin>
   cc:	83 c4 10             	add    $0x10,%esp
         exit();
@@ -129,14 +129,14 @@ int main() {
   d9:	89 45 f0             	mov    %eax,-0x10(%ebp)
   dc:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
   e0:	75 1f                	jne    101 <main+0x98>
-        settickets(20);
+        settickets(80);
   e2:	83 ec 0c             	sub    $0xc,%esp
-  e5:	6a 14                	push   $0x14
+  e5:	6a 50                	push   $0x50
   e7:	e8 0a 03 00 00       	call   3f6 <settickets>
   ec:	83 c4 10             	add    $0x10,%esp
-        spin(20);
+        spin(80);
   ef:	83 ec 0c             	sub    $0xc,%esp
-  f2:	6a 14                	push   $0x14
+  f2:	6a 50                	push   $0x50
   f4:	e8 07 ff ff ff       	call   0 <spin>
   f9:	83 c4 10             	add    $0x10,%esp
         exit();

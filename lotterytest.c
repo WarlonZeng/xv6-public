@@ -7,7 +7,7 @@ void spin(int tix) {
     struct rtcdate end;
     unsigned x = 0;
     unsigned y = 0;
-    while (x < 10000) { // Changed from 100000
+    while (x < 100000) { // Changed from 100000
         y = 0;
         while (y < 10000) {
             y++;
@@ -26,13 +26,13 @@ int main() {
     gettime(&start);
     printf(0, "starting test at %d hours %d minutes %d seconds\n", start.hour, start.minute, start.second);
     if ((pid1 = fork()) == 0) {
-        settickets(80);
-        spin(80);
+        settickets(20);
+        spin(20);
         exit();
     }
     else if ((pid2 = fork()) == 0) {
-        settickets(20);
-        spin(20);
+        settickets(80);
+        spin(80);
         exit();
     }
     // Go to sleep and wait for subprocesses to finish
